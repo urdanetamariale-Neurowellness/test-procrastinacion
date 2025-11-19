@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test de Procrastinación - Descubre qué sistema cerebral te está bloqueando">
+    <title>Test de Procrastinación | Neurowellness Learning</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #F7F4F1;
+            color: #4A4D53;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .header-gradient {
+            background: #14233A;
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 1.5rem 1.5rem 0 0;
+            text-align: center;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+        
+        .subtitle {
+            color: #E9C8C8;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            color: #E9C8C8;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #14233A;
+            font-weight: 700;
+        }
+        
+        .welcome-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4A4D53;
+            margin-bottom: 1.5rem;
+        }
+        
+        .highlight-box {
+            background: #E9C8C8;
+            border-left: 4px solid #9B6D80;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+        }
+        
+        .highlight-box p {
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+        
+        .info-box {
+            background: #F7F4F1;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+        }
+        
+        .info-box h3 {
+            color: #14233A;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-list li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .info-list li:before {
+            content: "●";
+            color: #D99A8F;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+        
+        .question-card {
+            background: white;
+            border: 2px solid #E6E2DE;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .question-card:hover {
+            border-color: #9B6D80;
+            box-shadow: 0 4px 12px rgba(155, 109, 128, 0.1);
+        }
+        
+        .question-number {
+            background: #E9C8C8;
+            color: #14233A;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .question-text {
+            color: #14233A;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        
+        .scale-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .scale-option {
+            text-align: center;
+        }
+        
+        .scale-option input[type="radio"] {
+            display: none;
+        }
+        
+        .scale-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 4rem;
+            padding: 0.5rem 0.35rem;
+            border: 2px solid #E6E2DE;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.75rem;
+            background: white;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .scale-option input[type="radio"]:checked + label {
+            background: #9B6D80;
+            border-color: #9B6D80;
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(155, 109, 128, 0.3);
+        }
+        
+        .scale-option label:hover {
+            border-color: #9B6D80;
+            transform: translateY(-2px);
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .btn-primary {
+            background: #9B6D80;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #7d5766;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(155, 109, 128, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #D99A8F;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #c7897e;
+            transform: translateY(-2px);
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #20BA5A;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .progress-bar {
+            background: #E6E2DE;
+            height: 0.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #9B6D80, #D99A8F);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 1rem;
+        }
+        
+        .progress-text {
+            text-align: center;
+            color: #4A4D53;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 3px solid #9B6D80;
+        }
+        
+        .system-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .badge-amenaza {
+            background: #D99A8F;
+            color: white;
+        }
+        
+        .badge-autocritica {
+            background: #D6C79A;
+            color: #14233A;
+        }
+        
+        .badge-rumiacion {
+            background: #9DB2A2;
+            color: white;
+        }
+        
+        .chart-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 1rem;
+        }
+        
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #E6E2DE;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus, input[type="email"]:focus {
+            outline: none;
+            border-color: #9B6D80;
+        }
+        
+        .error-message {
+            color: #D99A8F;
+            font-size: 0.9rem;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem 0.5rem;
+            }
+            
+            .card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+                border-radius: 1rem;
+            }
+            
+            .header-gradient {
+                padding: 2rem 1rem;
+                border-radius: 1rem 1rem 0 0;
+            }
+            
+            .logo-container img {
+                max-width: 150px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .tagline {
+                font-size: 0.85rem;
+            }
+            
+            .welcome-text {
+                font-size: 1rem;
+            }
+            
+            .question-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .question-number {
+                width: 2rem;
+                height: 2rem;
+                font-size: 0.9rem;
+                margin-right: 0.5rem;
+            }
+            
+            .question-text {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+            
+            .scale-container {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .scale-option label {
+                min-height: 3rem;
+                padding: 0.75rem 0.5rem;
+                font-size: 0.85rem;
+                text-align: left;
+                justify-content: flex-start;
+            }
+            
+            .btn {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+                width: 100%;
+            }
+            
+            .chart-container {
+                max-width: 100%;
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            
+            .result-card {
+                padding: 1.25rem;
+                margin-bottom: 1.25rem;
+            }
+            
+            .system-badge {
+                font-size: 0.85rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .info-box, .highlight-box {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            
+            .info-box h3 {
+                font-size: 1rem;
+            }
+            
+            .info-list li {
+                font-size: 0.9rem;
+                padding: 0.5rem 0;
+            }
+            
+            input[type="text"], input[type="email"] {
+                padding: 0.875rem;
+                font-size: 0.95rem;
+            }
+            
+            .progress-text {
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.5rem 0.25rem;
+            }
+            
+            .card {
+                padding: 0.75rem;
+                border-radius: 0.75rem;
+            }
+            
+            .header-gradient {
+                padding: 1.5rem 0.75rem;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            h2 {
+                font-size: 1.15rem;
+            }
+            
+            .logo-container img {
+                max-width: 120px;
+            }
+            
+            .question-card {
+                padding: 0.75rem;
+            }
+            
+            .question-text {
+                font-size: 0.9rem;
+            }
+            
+            .scale-option label {
+                font-size: 0.8rem;
+                padding: 0.65rem 0.4rem;
+            }
+            
+            .btn {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.95rem;
+            }
+            
+            .chart-container {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- PANTALLA DE BIENVENIDA -->
+        <div id="welcome-screen">
+            <div class="card">
+                <div class="header-gradient">
+                    <div class="logo-container">
+                        <img src="https://i.postimg.cc/hjmxL9Lg/Logo-Neuro-Wellness-Blanco-(2).png" alt="NeuroWellness Learning">
+                    </div>
+                    <div class="subtitle">Test de Procrastinación</div>
+                    <h1>¿Qué Sistema Cerebral Te Está Bloqueando?</h1>
+                    <div class="tagline">Descubre tu patrón neurológico en 3 minutos</div>
+                </div>
+                
+                <div style="padding: 2rem;">
+                    <p class="welcome-text">
+                        No procrastinas porque seas floja o te falte disciplina. 
+                        <strong>Procrastinas porque tu cerebro está en modo protección.</strong>
+                    </p>
+                    
+                    <p class="welcome-text">
+                        Existen 3 sistemas cerebrales diferentes que bloquean tu acción, y cada uno necesita una solución específica. 
+                        Este test identificará cuál es tu sistema dominante.
+                    </p>
+                    
+                    <div class="info-box">
+                        <h3>Los 3 Sistemas que Bloquean tu Acción:</h3>
+                        <ul class="info-list">
+                            <li><strong>Sistema de Amenaza: </strong>Tu cerebro interpreta la tarea como peligro y activa el freno interno. Te paraliza el "¿Y si sale mal?"</li>
+                            <li><strong>Sistema de Autocrítica: </strong>El perfeccionismo te bloquea antes de empezar. Tu crítico interno te dice "no es suficiente".</li>
+                            <li><strong>Sistema de Rumiación: </strong>Te pierdes en sobrepensamiento y análisis infinito sin llegar a la acción.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <p style="margin: 0; font-weight: 500;">
+                            ⏱️ Duración: 3 minutos<br>
+                            📊 9 preguntas simples<br>
+                            📥 Reporte personalizado en PDF<br>
+                            🎯 Soluciones específicas para TU patrón
+                        </p>
+                    </div>
+                    
+                    <h3 style="color: #14233A; margin-top: 2rem; margin-bottom: 1rem;">Ingresa tus datos para comenzar:</h3>
+                    
+                    <input type="text" id="user-name" placeholder="Tu nombre completo *" required>
+                    <div id="name-error" class="error-message hidden">Por favor ingresa tu nombre</div>
+                    
+                    <input type="email" id="user-email" placeholder="Tu correo electrónico *" required>
+                    <div id="email-error" class="error-message hidden">Por favor ingresa un correo válido</div>
+                    
+                    <button class="btn btn-primary" onclick="startTest()">Comenzar Test</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PANTALLA DE TEST -->
+        <div id="test-screen" class="hidden">
+            <div class="card">
+                <div class="header-gradient">
+                    <div class="logo-container">
+                        <img src="https://i.postimg.cc/hjmxL9Lg/Logo-Neuro-Wellness-Blanco-(2).png" alt="NeuroWellness Learning">
+                    </div>
+                    <h1>Test de Procrastinación</h1>
+                    <div class="tagline">Responde con honestidad basándote en cómo te sientes generalmente</div>
+                </div>
+                
+                <div style="padding: 2rem;">
+                    <div class="progress-text" id="progress-text">Pregunta 1 de 9</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 11%"></div>
+                    </div>
+                    
+                    <div id="questions-container"></div>
+                    
+                    <button class="btn btn-primary" onclick="submitTest()">Ver Mis Resultados</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PANTALLA DE RESULTADOS -->
+        <div id="results-screen" class="hidden">
+            <div class="card">
+                <div class="header-gradient">
+                    <div class="logo-container">
+                        <img src="https://i.postimg.cc/hjmxL9Lg/Logo-Neuro-Wellness-Blanco-(2).png" alt="NeuroWellness Learning">
+                    </div>
+                    <div class="subtitle">Tus Resultados</div>
+                    <h1 id="result-title">Tu Sistema Dominante</h1>
+                </div>
+                
+                <div style="padding: 2rem;">
+                    <div class="result-card">
+                        <div id="system-badge" class="system-badge"></div>
+                        <h2 id="system-title"></h2>
+                        <p id="system-description" style="font-size: 1.1rem; line-height: 1.8; color: #4A4D53;"></p>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="resultsChart"></canvas>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3>¿Por qué este sistema te bloquea?</h3>
+                        <p id="why-blocks" style="line-height: 1.8;"></p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3>Cómo se manifiesta en tu vida</h3>
+                        <ul class="info-list" id="manifestations"></ul>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <h3 style="color: #14233A; margin-bottom: 1rem;">Tu técnica de activación personalizada</h3>
+                        <p id="technique" style="margin: 0; line-height: 1.8;"></p>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="downloadPDF()" style="margin-bottom: 1rem;">📥 Descargar Reporte Completo (PDF)</button>
+                    
+                    <div class="highlight-box" style="margin: 2rem 0;">
+                        <h3 style="color: #14233A; margin-bottom: 1rem; text-align: center;">¿Quieres dejar de procrastinar de verdad?</h3>
+                        <p style="text-align: center; margin-bottom: 1.5rem;">
+                            Hablemos para ver si el Programa NeuroWellness Learning es para ti. 
+                            No es para todos, pero si estás lista para transformar tu relación con la acción, conversemos.
+                        </p>
+                        <a href="https://wa.me/34603777334?text=Hola%20Mariale,%20acabo%20de%20hacer%20el%20Test%20de%20Procrastinación%20y%20me%20gustaría%20saber%20más%20sobre%20el%20Programa%20NeuroWellness%20Learning" target="_blank" style="text-decoration: none;">
+                            <button class="btn btn-whatsapp" style="margin-bottom: 1rem;">💬 Escríbeme por WhatsApp</button>
+                        </a>
+                    </div>
+                    
+                    <button class="btn btn-secondary" onclick="resetTest()">🔄 Hacer el Test de Nuevo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Variables globales
+        let userName = '';
+        let userEmail = '';
+        let currentQuestion = 0;
+        let answers = {};
+        
+        // Preguntas del test (3 por sistema)
+        const questions = [
+            // SISTEMA DE AMENAZA (3 preguntas)
+            {
+                id: 1,
+                text: "Cuando pienso en empezar una tarea importante, siento ansiedad o incomodidad física (nudos en el estómago, tensión, etc.)",
+                system: "amenaza"
+            },
+            {
+                id: 2,
+                text: "Evito tareas que podrían exponerme a críticas, fracaso o evaluación negativa",
+                system: "amenaza"
+            },
+            {
+                id: 3,
+                text: "Cuando finalmente me obligo a empezar algo difícil, mi cuerpo se tensa y siento que estoy forzándome",
+                system: "amenaza"
+            },
+            
+            // SISTEMA DE AUTOCRÍTICA (3 preguntas)
+            {
+                id: 4,
+                text: "Me cuesta empezar porque siento que no va a quedar lo suficientemente bien",
+                system: "autocritica"
+            },
+            {
+                id: 5,
+                text: "Mi crítico interno me dice que no soy capaz o que no estoy preparada para hacer esto",
+                system: "autocritica"
+            },
+            {
+                id: 6,
+                text: "Postergó tareas porque quiero tener las condiciones perfectas antes de comenzar",
+                system: "autocritica"
+            },
+            
+            // SISTEMA DE RUMIACIÓN (3 preguntas)
+            {
+                id: 7,
+                text: "Paso mucho tiempo pensando en cómo hacer algo, pero no avanzo en la acción real",
+                system: "rumiacion"
+            },
+            {
+                id: 8,
+                text: "Me pierdo analizando todas las opciones posibles y no logro decidir por dónde empezar",
+                system: "rumiacion"
+            },
+            {
+                id: 9,
+                text: "Sé exactamente qué debería hacer, pero mi mente sigue dando vueltas y no paso a la acción",
+                system: "rumiacion"
+            }
+        ];
+        
+        // Validación y inicio del test
+        function startTest() {
+            const nameInput = document.getElementById('user-name');
+            const emailInput = document.getElementById('user-email');
+            const nameError = document.getElementById('name-error');
+            const emailError = document.getElementById('email-error');
+            
+            let isValid = true;
+            
+            // Validar nombre
+            if (!nameInput.value.trim()) {
+                nameError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                nameError.classList.add('hidden');
+            }
+            
+            // Validar email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
+                emailError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                emailError.classList.add('hidden');
+            }
+            
+            if (!isValid) return;
+            
+            userName = nameInput.value.trim();
+            userEmail = emailInput.value.trim();
+            
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('test-screen').classList.remove('hidden');
+            
+            renderQuestions();
+        }
+        
+        // Renderizar preguntas
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-card';
+                questionDiv.innerHTML = `
+                    <div class="question-text">
+                        <span class="question-number">${index + 1}</span>
+                        <span>${q.text}</span>
+                    </div>
+                    <div class="scale-container">
+                        <div class="scale-option">
+                            <input type="radio" id="q${q.id}-1" name="q${q.id}" value="1" onchange="updateProgress()">
+                            <label for="q${q.id}-1">Nunca o casi nunca</label>
+                        </div>
+                        <div class="scale-option">
+                            <input type="radio" id="q${q.id}-2" name="q${q.id}" value="2" onchange="updateProgress()">
+                            <label for="q${q.id}-2">Pocas veces</label>
+                        </div>
+                        <div class="scale-option">
+                            <input type="radio" id="q${q.id}-3" name="q${q.id}" value="3" onchange="updateProgress()">
+                            <label for="q${q.id}-3">A veces</label>
+                        </div>
+                        <div class="scale-option">
+                            <input type="radio" id="q${q.id}-4" name="q${q.id}" value="4" onchange="updateProgress()">
+                            <label for="q${q.id}-4">Frecuentemente</label>
+                        </div>
+                        <div class="scale-option">
+                            <input type="radio" id="q${q.id}-5" name="q${q.id}" value="5" onchange="updateProgress()">
+                            <label for="q${q.id}-5">Siempre o casi siempre</label>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+        
+        // Actualizar barra de progreso
+        function updateProgress() {
+            let answered = 0;
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+                if (selected) {
+                    answered++;
+                    answers[q.id] = {
+                        value: parseInt(selected.value),
+                        system: q.system
+                    };
+                }
+            });
+            
+            const percentage = (answered / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = `Pregunta ${answered} de ${questions.length}`;
+        }
+        
+        // Calcular resultados
+        function calculateResults() {
+            const systems = {
+                amenaza: 0,
+                autocritica: 0,
+                rumiacion: 0
+            };
+            
+            Object.values(answers).forEach(answer => {
+                systems[answer.system] += answer.value;
+            });
+            
+            // Encontrar sistema dominante
+            let dominantSystem = 'amenaza';
+            let maxScore = systems.amenaza;
+            
+            if (systems.autocritica > maxScore) {
+                dominantSystem = 'autocritica';
+                maxScore = systems.autocritica;
+            }
+            
+            if (systems.rumiacion > maxScore) {
+                dominantSystem = 'rumiacion';
+                maxScore = systems.rumiacion;
+            }
+            
+            return {
+                systems: systems,
+                dominant: dominantSystem,
+                scores: {
+                    amenaza: ((systems.amenaza / 15) * 100).toFixed(0),
+                    autocritica: ((systems.autocritica / 15) * 100).toFixed(0),
+                    rumiacion: ((systems.rumiacion / 15) * 100).toFixed(0)
+                }
+            };
+        }
+        
+        // Enviar test
+        function submitTest() {
+            // Validar que todas las preguntas estén respondidas
+            if (Object.keys(answers).length !== questions.length) {
+                alert('Por favor responde todas las preguntas antes de continuar');
+                return;
+            }
+            
+            const results = calculateResults();
+            showResults(results);
+        }
+        
+        // Mostrar resultados
+        function showResults(results) {
+            document.getElementById('test-screen').classList.add('hidden');
+            document.getElementById('results-screen').classList.remove('hidden');
+            
+            const systemData = getSystemData(results.dominant);
+            
+            // Actualizar badge y título
+            const badge = document.getElementById('system-badge');
+            badge.textContent = systemData.name;
+            badge.className = `system-badge badge-${results.dominant}`;
+            
+            document.getElementById('system-title').textContent = systemData.title;
+            document.getElementById('system-description').textContent = systemData.description;
+            document.getElementById('why-blocks').textContent = systemData.whyBlocks;
+            
+            // Manifestaciones
+            const manifestationsList = document.getElementById('manifestations');
+            manifestationsList.innerHTML = '';
+            systemData.manifestations.forEach(m => {
+                const li = document.createElement('li');
+                li.textContent = m;
+                manifestationsList.appendChild(li);
+            });
+            
+            document.getElementById('technique').textContent = systemData.technique;
+            
+            // Crear gráfico
+            createChart(results);
+            
+            // Enviar datos a Google Sheets
+            enviarResultadosAGoogleDrive(results);
+            
+            // Scroll al inicio
+            window.scrollTo(0, 0);
+        }
+        
+        // Datos de cada sistema
+        function getSystemData(system) {
+            const data = {
+                amenaza: {
+                    name: "Sistema de Amenaza",
+                    title: "Tu cerebro interpreta acción como peligro",
+                    description: "Tu sistema nervioso está en modo supervivencia. Cada vez que piensas en hacer algo importante, tu cuerpo activa una respuesta de estrés porque tu cerebro lo interpreta como amenaza. No es falta de motivación: es biología de protección.",
+                    whyBlocks: "Tu amígdala (centro de alarma del cerebro) se activa ante la incertidumbre y el riesgo de fracaso. Esto genera cortisol, que literalmente paraliza tu capacidad de acción. Tu sistema nervioso te está protegiendo de un peligro que no existe, pero tu cuerpo no sabe diferenciarlo.",
+                    manifestations: [
+                        "Sientes ansiedad física antes de empezar tareas importantes",
+                        "Evitas situaciones donde podrías ser evaluada o juzgada",
+                        "Procrastinas más cuando los stakes son altos",
+                        "Tu cuerpo se tensa cuando te obligas a hacer algo difícil"
+                    ],
+                    technique: "TÉCNICA DE SEGURIDAD SOMÁTICA (3 minutos):\n\n1) Respiración vagal: Inhala 4 segundos, exhala 6 segundos, repite 5 veces.\n\n2) Frase de regulación: 'Esta tarea no es peligro. Mi cuerpo puede estar tranquilo mientras actúo.'\n\n3) Movimiento de activación: Sacude suavemente tus manos 30 segundos, luego empieza con 2 minutos de la tarea.\n\nTu sistema nervioso aprenderá que acción no es amenaza."
+                },
+                autocritica: {
+                    name: "Sistema de Autocrítica",
+                    title: "Tu perfeccionismo te paraliza antes de empezar",
+                    description: "Tu crítico interno es tan fuerte que te convence de que no eres capaz o que no va a quedar suficientemente bien. Este sistema te bloquea con la exigencia infinita: nunca es el momento perfecto, nunca estás suficientemente preparada.",
+                    whyBlocks: "Tu corteza prefrontal (centro de evaluación) está hiperactiva, creando estándares imposibles. Esto activa vergüenza anticipada, que es una emoción tan dolorosa que tu cerebro prefiere evitar la acción completamente. El perfeccionismo es procrastinación disfrazada de estándares altos.",
+                    manifestations: [
+                        "Esperas tener las condiciones perfectas antes de empezar",
+                        "Tu diálogo interno es duro: 'No vas a poder', 'No es suficiente'",
+                        "Comparas tu inicio con el resultado final de otros",
+                        "Postergas porque 'no estás lista todavía'"
+                    ],
+                    technique: "TÉCNICA DE PERMISO PARA IMPERFECCIÓN (3 minutos):\n\n1) Escribe: 'Tengo permiso para hacer esto mal.'\n\n2) Frase de reencuadre: 'Hecho imperfecto es mejor que perfecto no hecho.'\n\n3) Acción de 5 minutos: Empieza con versión fea/rápida/incompleta de tu tarea. No edites, no corrijas, solo avanza.\n\nTu cerebro aprenderá que acción imperfecta sigue siendo valiosa."
+                },
+                rumiacion: {
+                    name: "Sistema de Rumiación",
+                    title: "Tu mente analiza sin parar, pero no avanzas",
+                    description: "Te pierdes en el sobrepensamiento. Sabes exactamente qué deberías hacer, pero tu mente sigue dando vueltas: analizando opciones, buscando la mejor estrategia, revisando pros y contras. Mientras tanto, no actúas.",
+                    whyBlocks: "Tu red neuronal por defecto (DMN) está demasiado activa. Esta red se enciende cuando no estás enfocada en una tarea específica, y te mantiene atrapada en bucles de pensamiento. Análisis sin acción no es productividad: es evitación mental.",
+                    manifestations: [
+                        "Pasas horas pensando en cómo hacer algo, pero no lo haces",
+                        "Te pierdes en análisis de todas las opciones posibles",
+                        "Sabes qué deberías hacer pero no logras empezar",
+                        "Tu mente da vueltas sobre lo mismo sin llegar a decisiones"
+                    ],
+                    technique: "TÉCNICA DE CORTE DE RUMIACIÓN (3 minutos):\n\n1) Detención física: Di en voz alta 'STOP' y da una palmada.\n\n2) Externaliza: Escribe en 1 minuto TODO lo que estás pensando (no importa si es caótico).\n\n3) Acción mínima: Elige UNA SOLA acción simple y hazla YA (2 minutos). Ejemplos: enviar un email, escribir un párrafo, hacer una llamada.\n\nTu cerebro saldrá del bucle al enfocarse en acción concreta."
+                }
+            };
+            
+            return data[system];
+        }
+        
+        // Crear gráfico
+        function createChart(results) {
+            const ctx = document.getElementById('resultsChart').getContext('2d');
+            
+            // Detectar si es móvil
+            const isMobile = window.innerWidth <= 768;
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Sistema de Amenaza', 'Sistema de Autocrítica', 'Sistema de Rumiación'],
+                    datasets: [{
+                        label: 'Tu Perfil de Procrastinación',
+                        data: [
+                            results.scores.amenaza,
+                            results.scores.autocritica,
+                            results.scores.rumiacion
+                        ],
+                        fill: true,
+                        backgroundColor: 'rgba(155, 109, 128, 0.2)',
+                        borderColor: '#9B6D80',
+                        pointBackgroundColor: '#9B6D80',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#9B6D80',
+                        borderWidth: 3,
+                        pointRadius: isMobile ? 4 : 6,
+                        pointHoverRadius: isMobile ? 6 : 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    layout: {
+                        padding: {
+                            top: isMobile ? 20 : 40,
+                            bottom: isMobile ? 20 : 40,
+                            left: isMobile ? 10 : 60,
+                            right: isMobile ? 10 : 60
+                        }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20,
+                                font: {
+                                    size: isMobile ? 8 : 11
+                                }
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: isMobile ? 9 : 11,
+                                    weight: '600'
+                                },
+                                color: '#14233A',
+                                padding: isMobile ? 10 : 20
+                            },
+                            grid: {
+                                color: '#E6E2DE'
+                            },
+                            angleLines: {
+                                color: '#E6E2DE'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.r + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Descargar PDF
+        async function downloadPDF() {
+            // Verificar que jsPDF esté cargado
+            if (typeof window.jspdf === 'undefined') {
+                alert('Error: La librería PDF no está cargada. Por favor recarga la página.');
+                return;
+            }
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const results = calculateResults();
+            const systemData = getSystemData(results.dominant);
+            
+            // ===============================================
+            // TODO EN 1 PÁGINA (según ejemplo proporcionado)
+            // ===============================================
+            
+            // BANNER SUPERIOR (30mm de alto - más compacto)
+            doc.setFillColor(20, 35, 58); // Azul Medianoche #14233A
+            doc.rect(0, 0, 210, 30, 'F');
+            
+            // Logo en esquina superior derecha
+            try {
+                const logoUrl = 'https://i.postimg.cc/hjmxL9Lg/Logo-Neuro-Wellness-Blanco-(2).png';
+                const logoImg = await fetch(logoUrl)
+                    .then(res => res.blob())
+                    .then(blob => new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.readAsDataURL(blob);
+                    }));
+                // Logo 30mm ancho x 20mm alto
+                doc.addImage(logoImg, 'PNG', 165, 6, 30, 20);
+            } catch(e) {
+                console.log('No se pudo cargar el logo');
+            }
+            
+            // Texto del banner
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(20);
+            doc.setFont(undefined, 'bold');
+            doc.text('TEST DE PROCRASTINACIÓN', 15, 13);
+            
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.text('Reporte Personalizado', 15, 20);
+            
+            doc.setFontSize(9);
+            doc.setTextColor(233, 200, 200); // Blush Empolvado
+            doc.text(userName, 15, 26);
+            
+            // CONTENIDO PRINCIPAL (márgenes ajustados)
+            let yPos = 40;
+            
+            // Header con color del sistema (más compacto)
+            let headerColor;
+            if (results.dominant === 'amenaza') headerColor = [250, 230, 225];
+            else if (results.dominant === 'autocritica') headerColor = [245, 240, 220];
+            else headerColor = [220, 230, 225];
+            
+            doc.setFillColor(headerColor[0], headerColor[1], headerColor[2]);
+            doc.rect(15, yPos, 180, 16, 'F');
+            
+            doc.setTextColor(20, 35, 58);
+            doc.setFontSize(13);
+            doc.setFont(undefined, 'bold');
+            doc.text('Tu Sistema Dominante', 20, yPos + 6);
+            
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text(systemData.name, 20, yPos + 12);
+            
+            yPos += 22;
+            
+            // Título (compacto)
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            const titleLines = doc.splitTextToSize(systemData.title, 175);
+            doc.text(titleLines, 15, yPos);
+            yPos += titleLines.length * 5.5 + 6;
+            
+            // Descripción (interlineado compacto)
+            doc.setFontSize(8.5);
+            doc.setFont(undefined, 'normal');
+            const descLines = doc.splitTextToSize(systemData.description, 175);
+            doc.text(descLines, 15, yPos);
+            yPos += descLines.length * 4.5 + 8;
+            
+            // Por qué te bloquea (compacto)
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.text('¿Por qué este sistema te bloquea?', 15, yPos);
+            yPos += 6;
+            
+            doc.setFontSize(8);
+            doc.setFont(undefined, 'normal');
+            const whyLines = doc.splitTextToSize(systemData.whyBlocks, 175);
+            doc.text(whyLines, 15, yPos);
+            yPos += whyLines.length * 4 + 8;
+            
+            // Cómo se manifiesta (4 items compactos)
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.text('Cómo se manifiesta en tu vida', 15, yPos);
+            yPos += 6;
+            
+            doc.setFontSize(8);
+            doc.setFont(undefined, 'normal');
+            systemData.manifestations.forEach((m) => {
+                doc.setFillColor(155, 109, 128); // Malva Sereno
+                doc.circle(17, yPos - 1, 1.2, 'F');
+                const mLines = doc.splitTextToSize(m, 168);
+                doc.text(mLines, 21, yPos);
+                yPos += mLines.length * 4 + 2.5;
+            });
+            
+            yPos += 6;
+            
+            // Técnica personalizada (caja compacta)
+            doc.setFillColor(247, 244, 241); // Marfil Cálido
+            const techHeight = 42;
+            doc.roundedRect(15, yPos - 2, 180, techHeight, 2, 2, 'F');
+            
+            doc.setTextColor(20, 35, 58);
+            doc.setFontSize(9.5);
+            doc.setFont(undefined, 'bold');
+            doc.text('Tu Técnica de Activación Personalizada (3 minutos)', 18, yPos + 3);
+            yPos += 8;
+            
+            doc.setFontSize(7);
+            doc.setFont(undefined, 'normal');
+            const techLines = doc.splitTextToSize(systemData.technique, 172);
+            doc.text(techLines, 18, yPos);
+            
+            yPos += techHeight - 5;
+            
+            // IMAGEN FINAL GRANDE (como en el ejemplo)
+            try {
+                const finalImageUrl = 'https://i.postimg.cc/W3vK9wtL/Title-Page-(1).png';
+                const finalImg = await fetch(finalImageUrl)
+                    .then(res => res.blob())
+                    .then(blob => new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.readAsDataURL(blob);
+                    }));
+                
+                // Imagen 1920x1080 (HORIZONTAL - proporción 16:9)
+                const aspectRatio = 1920 / 1080; // 1.778
+                
+                // Imagen grande como en el ejemplo: 180mm ancho
+                let imgWidth = 180;
+                let imgHeight = imgWidth / aspectRatio; // ~101mm
+                
+                // Centrar horizontalmente
+                const xPos = (210 - imgWidth) / 2;
+                
+                doc.addImage(finalImg, 'PNG', xPos, yPos, imgWidth, imgHeight);
+            } catch(e) {
+                console.log('No se pudo cargar la imagen final');
+            }
+            
+            // Footer (número de página)
+            doc.setFontSize(7);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Página 1 de 1', 105, 293, { align: 'center' });
+            
+            // Guardar
+            doc.save(`Test-Procrastinacion-${userName.replace(/\s+/g, '-')}.pdf`);
+            
+            // Mostrar mensaje de éxito
+            alert('¡PDF descargado exitosamente! 📥');
+        }
+        
+        // Reiniciar test
+        function resetTest() {
+            answers = {};
+            currentQuestion = 0;
+            
+            document.getElementById('results-screen').classList.add('hidden');
+            document.getElementById('welcome-screen').classList.remove('hidden');
+            
+            document.getElementById('user-name').value = '';
+            document.getElementById('user-email').value = '';
+            
+            window.scrollTo(0, 0);
+        }
+        
+        // Enviar a Google Drive (opcional - configura tu URL)
+        // INSTRUCCIONES PARA CONFIGURAR:
+        // 1. Ve a Google Sheets y crea una nueva hoja
+        // 2. Ve a Extensiones > Apps Script
+        // 3. Copia el código que está en el comentario al final de este archivo
+        // 4. Despliega como Web App y copia la URL aquí:
+        const GOOGLE_SCRIPT_URL = 'TU_URL_DEL_GOOGLE_SCRIPT_AQUI';
+        
+        function enviarResultadosAGoogleDrive(results) {
+            // Si no hay URL configurada, no enviar
+            if (GOOGLE_SCRIPT_URL === 'TU_URL_DEL_GOOGLE_SCRIPT_AQUI') {
+                console.log('⚠️ Google Sheets no configurado. Configura GOOGLE_SCRIPT_URL para guardar datos.');
+                return;
+            }
+            
+            const datos = {
+                timestamp: new Date().toISOString(),
+                nombre: userName,
+                email: userEmail,
+                sistemaDominante: results.dominant,
+                amenazaScore: results.scores.amenaza,
+                autocriticaScore: results.scores.autocritica,
+                rumiacionScore: results.scores.rumiacion,
+                respuestas: JSON.stringify(answers)
+            };
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(() => {
+                console.log('✅ Resultados guardados en Google Sheets');
+            })
+            .catch((error) => {
+                console.error('❌ Error al guardar:', error);
+            });
+        }
+    </script>
+    
+    <!-- 
+    ============================================
+    CÓDIGO PARA GOOGLE APPS SCRIPT
+    ============================================
+    
+    Para guardar las respuestas en Google Sheets:
+    
+    1. Ve a Google Sheets: https://sheets.google.com
+    2. Crea una nueva hoja llamada "Test Procrastinación"
+    3. En la primera fila, pon estos encabezados:
+       Fecha | Hora | Nombre | Email | Sistema Dominante | Amenaza % | Autocrítica % | Rumiación % | Respuestas
+    
+    4. Ve a Extensiones > Apps Script
+    5. Borra todo el código que aparece
+    6. Copia y pega este código:
+    
+    ───────────────────────────────────────────────────────────────
+    
+    function doPost(e) {
+      try {
+        var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+        var data = JSON.parse(e.postData.contents);
+        
+        var timestamp = new Date(data.timestamp);
+        var fecha = Utilities.formatDate(timestamp, Session.getScriptTimeZone(), "dd/MM/yyyy");
+        var hora = Utilities.formatDate(timestamp, Session.getScriptTimeZone(), "HH:mm:ss");
+        
+        sheet.appendRow([
+          fecha,
+          hora,
+          data.nombre,
+          data.email,
+          data.sistemaDominante,
+          data.amenazaScore + '%',
+          data.autocriticaScore + '%',
+          data.rumiacionScore + '%',
+          data.respuestas
+        ]);
+        
+        return ContentService.createTextOutput(JSON.stringify({result: "success"}))
+          .setMimeType(ContentService.MimeType.JSON);
+      } catch(error) {
+        return ContentService.createTextOutput(JSON.stringify({result: "error", error: error.toString()}))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+    
+    ───────────────────────────────────────────────────────────────
+    
+    7. Haz clic en "Implementar" > "Nueva implementación"
+    8. Elige "Aplicación web"
+    9. Configuración:
+       - Descripción: Test de Procrastinación
+       - Ejecutar como: Yo (tu email)
+       - Quién tiene acceso: Cualquier persona
+    10. Haz clic en "Implementar"
+    11. Copia la URL que te dan (termina en /exec)
+    12. Pega esa URL en la línea 1444 de este archivo HTML:
+        const GOOGLE_SCRIPT_URL = 'PEGA_TU_URL_AQUI';
+    
+    ¡Listo! Ahora cada vez que alguien complete el test, los datos se guardarán en tu Google Sheet.
+    -->
+</body>
+</html>
