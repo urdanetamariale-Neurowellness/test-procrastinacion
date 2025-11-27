@@ -1230,10 +1230,7 @@
         
         function enviarResultadosAGoogleDrive(results) {
             // Si no hay URL configurada, no enviar
-            if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbz7T3V2vFWxM-XQ-sdporTK7PATB_lEpJhQox4CPiEBzSnfDBUm8ENbMhJJm8UEl9ZyvQ/exec' || !GOOGLE_SCRIPT_URL) {
-                console.log('⚠️ Google Sheets no configurado. Configura GOOGLE_SCRIPT_URL para guardar datos.');
-                return;
-            }
+           if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbz7T3V2vFWxM-XQ-sdporTK7PATB_lEpJhQox4CPiEBzSnfDBUm8ENbMhJJm8UEl9ZyvQ/exec' || !GOOGLE_SCRIPT_URL) {
             
             // Obtener nombres de sistemas para mostrar en español
             const systemNames = {
